@@ -1,0 +1,66 @@
+$icon-font-path: '../fonts/';
+
+// bower:scss
+@import 'bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+// endbower
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  background-image: url('../images/bck.jpg');
+  background-size: cover;
+}
+
+.stamps {
+  width: 100%;
+  height: auto;
+  position: relative;
+  margin: auto;
+
+  padding-left: 3%;
+  padding-right: 3%;
+  overflow: hidden;
+}
+.stamp {
+  width: 30%;
+
+  background-image: url('../images/st.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  position: relative;
+  float: left;
+
+  margin-bottom: 2%;
+
+}
+.stamp:nth-child(3n-2) {
+  margin-right: 2%;
+}
+.stamp:nth-child(3n) {
+  margin-left : 2%;
+}
+.stamp:nth-child(10) {
+  margin-left: 32%;
+}
+.stamp.stamped {
+    background-image: url('../images/stampiljka.png');
+}
+
+.stampme {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-image: url('../images/st.png');
+    background-size: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
