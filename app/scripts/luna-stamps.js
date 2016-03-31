@@ -9,7 +9,7 @@ See GitHub project page for Documentation and License
   $.fn.lunastamps = {
     init: function(callback) {
       var stampDiv = $(".stampme");
-      if (!("stamps_" in window))
+      if (!("stampsData" in window))
         stampsData = getDefaultStamps()
       var stamps = stampsData;
       var text = ""
