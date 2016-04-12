@@ -28,28 +28,51 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+    <section id="header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="bg-green">
+              <div id="headertext">
+                Planinska knjižica
+              </div>
+              <div id="footerbottom"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="login" class="">
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
-            <h1>Prosim vpiši se</h1>
+            <h1>Ustvari si uporabniški račun</h1>
             <form id="loginform">
               <div class="form-group">
-                <label for="emailinput">Email naslov</label>
-                <input type="email" class="form-control" id="emailinput" placeholder="Email naslov">
+                <span class="input input--manami">
+        					<input class="input__field input__field--manami" type="email" id="emailinput" />
+        					<label class="input__label input__label--manami" for="emailinput">
+        						<span class="input__label-content input__label-content--manami">Email</span>
+        					</label>
+        				</span>
               </div>
               <div class="form-group">
-                <label for="passwordinput">Geslo</label>
-                <input type="password" class="form-control" id="passwordinput" placeholder="Geslo">
+                <span class="input input--manami">
+        					<input class="input__field input__field--manami" type="text" id="passwordinput" />
+        					<label class="input__label input__label--manami" for="passwordinput">
+        						<span class="input__label-content input__label-content--manami">Geslo</span>
+        					</label>
+        				</span>
               </div>
-              <button type="submit" class="btn btn-default">Oddaj</button>
+              <button type="submit" class="laskobtn laskobtn-big">Oddaj</button>
             </form>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="register" class="">
+    <section id="register" class="hidden">
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
