@@ -1,5 +1,5 @@
 // init Gun
-var gun = Gun("http://luna.webfactional.com/gun/gun:22280");
+var gun = Gun();//"http://luna.webfactional.com/gun/gun:22280");
 // cosmetics
 function makeStampsPretty() {
   $('.stamp').height($('.stamp').width());
@@ -102,7 +102,7 @@ function initStampScreen() {
   var user = sessionStorage.getItem('user');
   var userObj = gun.get("people").get(user);
   //var stamps = Gun().get('stamps')
-  
+
   userObj.path("name").val(function(name){
     $("#my_name").text(name)
   });
@@ -113,9 +113,9 @@ function initStampScreen() {
       $("#"+peakz[i]).addClass("stamped");
     }
 
-  
+
   });
-  
+
   $(".stampme").lunastamps.init(function(peakname) {
     addPeak(userObj, peakname);
   });
