@@ -27,14 +27,14 @@ function initLogin() {
   $('#loginform').on('submit', function(event) {
     event.preventDefault();
     var isUser = false;
-    var user = gun.get('people').get($("#emailinput").val());
+    var user = gun.get('people').get(CryptoJS.SHA256($("#emailinput").val()).toString(CryptoJS.enc.Base64));
     user.not(function(usr){
       alert("Email ne ustreza nobenemu uporabniku")
     });
     user.val(function(usr) {
       isUser = true;
       if (usr.password == CryptoJS.SHA256($('#passwordinput').val()).toString(CryptoJS.enc.Base64)) {
-        localStorage.setItem('user', $('#emailinput').val())
+        localStorage.setItem('user', CryptoJS.SHA256($('#emailinput').val()).toString(CryptoJS.enc.Base64))
 
         $('#login').addClass('hidden');
         $('#register').addClass('hidden');
@@ -50,17 +50,53 @@ function initLogin() {
 }
 
 function createUser() {
-  var user = gun.get($('#registeremailinput').val()).put({
+  //TODO:send email to server
+  /*$.ajax({
+    url: "http://",
+    cache:false,
+    success: function(result){
+      //Do nothing
+    },
+    error: function(result){
+      localStorage.setItem('mail', $('#registeremailinput').val())
+    }
+  });*/
+  /*var peaks = gun.get("peaks").put({
+    triglav: false,
+    smarna: false,
+    neki: false,
+    morje: false,
+    krma: false,
+    kum: false,
+    mangart: false,
+    spik: false,
+    roznik: false,
+    stol: false,
+  });*/
+
+  var user = gun.get(CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64)).put({
     name: $('#registernameinput').val(),
-    email: $('#registeremailinput').val(),
-    peaks: JSON.stringify([""]),
-    password: CryptoJS.SHA256($('#registerpasswordinput').val()).toString(CryptoJS.enc.Base64)
-  })
+    email: CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64),
+    password: CryptoJS.SHA256($('#registerpasswordinput').val()).toString(CryptoJS.enc.Base64),
+    peaks: {
+      triglav: false,
+      smarna: false,
+      neki: false,
+      morje: false,
+      krma: false,
+      kum: false,
+      mangart: false,
+      spik: false,
+      roznik: false,
+      stol: false,
+    },
+  });
+  //user.set(peaks);
 
   var people = gun.get('people');
   people.set(user)
 
-  localStorage.setItem('user', $('#registeremailinput').val())
+  localStorage.setItem('user', CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64))
 
   $('#login').addClass('hidden');
   $('#register').addClass('hidden');
@@ -76,7 +112,7 @@ function initReg() {
     event.preventDefault();
 
     var isUser = false;
-    var user = gun.get('people').get($("#registeremailinput").val());
+    var user = gun.get('people').get(CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64));
     user.val(function(usr) {
       if (usr.name !== "undefined" && !isUser) {
         isUser = true;
@@ -90,29 +126,19 @@ function initReg() {
   });
 }
 
+
 function addPeak(userObj, nameOfPeak) {
-  var list = null;
+  var myPeaks = null;
   console.log(nameOfPeak);
-  userObj.val(function(peak){
-    console.log(peak);
-    list=peak.peaks;
-    if (list == '[""]'){
-      console.log("bil je prazn");
-      userObj.put({
-        peaks: JSON.stringify([nameOfPeak])
-      })
-    }
-  else {
-      list = JSON.parse(list);
-      console.log(peak.peaks);
-      console.log(list);
-      
-      list.push(nameOfPeak);
-      console.log(JSON.stringify(list));
-      userObj.put({
-        peaks: JSON.stringify($.unique(list))
-      })
-  }
+  userObj.val(function(user){
+    myPeaks=user.peaks;
+    
+    myPeaks[nameOfPeak] = true;
+    console.log(myPeaks);
+    userObj.put({
+      peaks: myPeaks
+    });
+
   console.log('Dodal ' + nameOfPeak + '!');
   $('#addstamp').addClass('hidden');
   $('#stamps').removeClass('hidden');
@@ -129,10 +155,18 @@ function initStampScreen() {
     $("#my_name").text(name)
   });
   userObj.path("peaks").val(function(peaks){
-    var peakz = JSON.parse(peaks);
-    for (var i=0; i<peakz.length; i++)
-    {
-      $("#"+peakz[i]).addClass("stamped");
+    console.log(peaks);
+    //var peakz = JSON.parse(peaks);
+    //for (var i=0; i<peakz.length; i++)
+    //{
+    //  $("#"+peakz[i]).addClass("stamped");
+    //}
+    for (var key in peaks){
+      console.log("kluc:"+key)
+      if (peaks[key]===true)
+      {
+        $("#"+key).addClass("stamped");
+      }
     }
 
   
