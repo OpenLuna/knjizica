@@ -13,6 +13,7 @@ See GitHub project page for Documentation and License
         stampsData = getDefaultStamps()
       var stamps = stampsData;
       var text = ""
+      console.log("init stamp")
 
 
       /*$.ajax({
@@ -134,7 +135,7 @@ See GitHub project page for Documentation and License
           if (Math.max.apply(null, calcDistance) < 25 / norm) {
             callback(stamps[i].name)
           }
-          stampDiv.html(text)
+          //stampDiv.html(text)
         }
       }
 

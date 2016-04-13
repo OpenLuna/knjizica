@@ -1,5 +1,5 @@
-// init Gun
-var gun = Gun("http://luna.webfactional.com/gun/gun:22280");
+var gun=null;
+
 // cosmetics
 function makeStampsPretty() {
   $('.stamp').height($('.stamp').width());
@@ -7,6 +7,20 @@ function makeStampsPretty() {
     $('#stamps').addClass('hidden');
     $('#addstamp').removeClass('hidden');
   });
+}
+
+//check if gun server is available
+function ping(url, sCallback, eCallback){
+   $.ajax({
+      url: url,
+      cache:false,
+      success: function(result){
+        sCallback();
+      },
+      error: function(result){
+        eCallback();
+      }
+   });
 }
 
 function initLogin() {
@@ -20,12 +34,13 @@ function initLogin() {
     user.val(function(usr) {
       isUser = true;
       if (usr.password == CryptoJS.SHA256($('#passwordinput').val()).toString(CryptoJS.enc.Base64)) {
-        sessionStorage.setItem('user', $('#emailinput').val())
+        localStorage.setItem('user', $('#emailinput').val())
 
         $('#login').addClass('hidden');
         $('#register').addClass('hidden');
         $('#stamps').removeClass('hidden');
         makeStampsPretty();
+        location.reload();
 
       } else {
         alert("Geslo ne ustreza uporabniku")
@@ -45,12 +60,14 @@ function createUser() {
   var people = gun.get('people');
   people.set(user)
 
-  sessionStorage.setItem('user', $('#registeremailinput').val())
+  localStorage.setItem('user', $('#registeremailinput').val())
 
   $('#login').addClass('hidden');
   $('#register').addClass('hidden');
   $('#stamps').removeClass('hidden');
   makeStampsPretty();
+  location.reload();
+
 };
 
 function initReg() {
@@ -74,34 +91,39 @@ function initReg() {
 }
 
 function addPeak(userObj, nameOfPeak) {
-  if (userObj.peaks == '[""]')
-    userObj.put({
-      peaks: JSON.stringify([nameOfPeak])
-    })
+  var list = null;
+  console.log(nameOfPeak);
+  userObj.val(function(peak){
+    console.log(peak);
+    list=peak.peaks;
+    if (list == '[""]'){
+      console.log("bil je prazn");
+      userObj.put({
+        peaks: JSON.stringify([nameOfPeak])
+      })
+    }
   else {
-    userObj.val(function(peaks) {
-      console.log(peaks.peaks);
-      var list = JSON.parse(peaks.peaks);
+      list = JSON.parse(list);
+      console.log(peak.peaks);
+      console.log(list);
+      
       list.push(nameOfPeak);
       console.log(JSON.stringify(list));
-        //peaks.peaks = JSON.stringify(list)
       userObj.put({
-        peaks: JSON.stringify([...new Set(list)])
+        peaks: JSON.stringify($.unique(list))
       })
-    })
-
   }
-  alert('Dodal ' + nameOfPeak + '!');
-    //peaksObj.put({name:nameOfPeak})
+  console.log('Dodal ' + nameOfPeak + '!');
   $('#addstamp').addClass('hidden');
   $('#stamps').removeClass('hidden');
   initStampScreen();
+  });
 }
 
+
 function initStampScreen() {
-  var user = sessionStorage.getItem('user');
+  var user = localStorage.getItem('user');
   var userObj = gun.get("people").get(user);
-  //var stamps = Gun().get('stamps')
   
   userObj.path("name").val(function(name){
     $("#my_name").text(name)
@@ -115,23 +137,33 @@ function initStampScreen() {
 
   
   });
-  
-  $(".stampme").lunastamps.init(function(peakname) {
-    addPeak(userObj, peakname);
-  });
-
+  return userObj;
 }
 
 $(document).ready(function() {
-  initLogin();
-  initReg();
-  initStampScreen();
-  var user = sessionStorage.getItem('user');
-  console.log(user)
-  if (user !== null){
-    $('#login').addClass('hidden');
-    $('#register').addClass('hidden');
-    $('#stamps').removeClass('hidden');
-    makeStampsPretty();
+  ping("http://pelji.se:81",
+    function(){
+      gun = Gun(["http://pelji.se:81/"]);
+      init();
+    },
+    function(){
+      gun = Gun();
+      init();
+    });
+  function init(){
+    initLogin();
+    initReg();
+    var userObj = initStampScreen();
+    $(".stampme").lunastamps.init(function(peakname) {
+      addPeak(userObj, peakname);
+    });
+    var user = localStorage.getItem('user');
+    console.log(user)
+    if (user !== null){
+      $('#login').addClass('hidden');
+      $('#register').addClass('hidden');
+      $('#stamps').removeClass('hidden');
+      makeStampsPretty();
+    }
   }
 });
