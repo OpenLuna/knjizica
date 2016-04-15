@@ -43,11 +43,55 @@
       </div>
     </section>
 
-    <section id="login" class="hidden">
+    <section id="register" class="">
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
             <h1>Ustvari si uporabniški račun</h1>
+            <a><h2>Ali se vpiši</h2></a>
+            <form id="registerform">
+              <div class="form-group">
+                <span class="input input--manami">
+        					<input class="input__field input__field--manami" type="text" id="registernameinput" />
+        					<label class="input__label input__label--manami" for="registernameinput">
+        						<span class="input__label-content input__label-content--manami">Ime in priimek</span>
+        					</label>
+        				</span>
+              </div>
+              <div class="form-group">
+                <span class="input input--manami">
+        					<input class="input__field input__field--manami" type="email" id="registeremailinput" />
+        					<label class="input__label input__label--manami" for="registeremailinput">
+        						<span class="input__label-content input__label-content--manami">Email</span>
+        					</label>
+        				</span>
+              </div>
+              <div class="form-group">
+                <span class="input input--manami">
+        					<input class="input__field input__field--manami" type="password" id="registerpasswordinput" />
+        					<label class="input__label input__label--manami" for="registerpasswordinput">
+        						<span class="input__label-content input__label-content--manami">Geslo</span>
+        					</label>
+        				</span>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="termsandconditions"> Strinjam se s pogoji in pravili uporabe
+                </label>
+              </div>
+              <button type="submit" class="laskobtn laskobtn-big">Oddaj</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="login" class="hidden">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h1>Vpiši se</h1>
+            <a><h2>Ali si ustvari uporabniški račun</h2></a>
             <form id="loginform">
               <div class="form-group">
                 <span class="input input--manami">
@@ -59,43 +103,13 @@
               </div>
               <div class="form-group">
                 <span class="input input--manami">
-        					<input class="input__field input__field--manami" type="text" id="passwordinput" />
+        					<input class="input__field input__field--manami" type="password" id="passwordinput" />
         					<label class="input__label input__label--manami" for="passwordinput">
         						<span class="input__label-content input__label-content--manami">Geslo</span>
         					</label>
         				</span>
               </div>
               <button type="submit" class="laskobtn laskobtn-big">Oddaj</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="register" class="hidden">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <h1>Ali se registriraj</h1>
-            <form id="registerform">
-                <div class="form-group">
-                  <label for="registernameinput">Tvoje ime</label>
-                  <input type="text" class="form-control" id="registernameinput" placeholder="Ime Priimek">
-                </div>
-              <div class="form-group">
-                <label for="registeremailinput">Email naslov</label>
-                <input type="email" class="form-control" id="registeremailinput" placeholder="Email naslov">
-              </div>
-              <div class="form-group">
-                <label for="registerpasswordinput">Geslo</label>
-                <input type="password" class="form-control" id="registerpasswordinput" placeholder="Geslo">
-              </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" id="termsandconditions"> Strinjam se s pogoji in pravili uporabe
-                </label>
-              </div>
-              <button type="submit" class="btn btn-default">Oddaj</button>
             </form>
           </div>
         </div>
@@ -117,7 +131,6 @@
               <div id="mangart" class="stamp"></div>
               <div id="stol" class="stamp"></div>
               <div id="spik" class="stamp"></div>
-              <div id="roznik" class="stamp"></div>
             </div>
           </div>
         </div>
@@ -125,7 +138,22 @@
     </section>
 
     <section id="addstamp" class="hidden">
-        <div class="stampme"></div>
+        <div class="stampme">
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="vrhinfo">
+                  <div class="vrhname">
+                    Mangart
+                  </div>
+                  <div class="vrhheight">
+                    2679 m
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </section>
 
     <section id="settings" class="hidden">

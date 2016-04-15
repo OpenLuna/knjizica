@@ -24,6 +24,8 @@ body {
   background-position: center bottom;
   background-size: 100%;
   background-repeat: no-repeat;
+
+  padding-bottom: 110px;
 }
 
 .stamps {
@@ -40,7 +42,7 @@ body {
   width: 30%;
 
   background-image: url('../images/dodaj_mangart.png');
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
 
   position: relative;
@@ -50,13 +52,13 @@ body {
 
 }
 .stamp:nth-child(3n-2) {
-  margin-right: 2%;
+  margin-right: 5%;
 }
 .stamp:nth-child(3n) {
-  margin-left : 2%;
+  margin-left : 5%;
 }
 .stamp:nth-child(10) {
-  margin-left: 32%;
+  margin-left: 35%;
 }
 .stamp.stamped {
     background-image: url('../images/stampiljka.png');
@@ -69,8 +71,8 @@ body {
     bottom: 0;
     left: 0;
 
-    background-image: url('../images/st.png');
-    background-size: auto;
+    background-image: url('../images/stempeljsem_mangart.png');
+    background-size: 75%;
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -135,3 +137,60 @@ button {
 }
 
 @import 'stamps';
+
+.vrhinfo {
+  position: relative;
+  margin: auto;
+  color: #000000;
+  margin-top: 25%;
+  text-align: center;
+}
+.vrhinfo:before {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 50px;
+  background-image: url('../images/carret_left.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+
+  top: 5px;
+
+  margin-left: -70px;
+  left: 50%;
+}
+.vrhinfo:after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 50px;
+  background-image: url('../images/carret_right.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+
+  top: 5px;
+
+  margin-right: -68px;
+  right: 50%;
+}
+.vrhinfo .vrhname {
+  padding-top: 5px;
+}
+.vrhinfo .vrhheight {
+  padding-top: 0;
+  margin-top: -8px;
+}
+
+a h2 {
+  color: #000000;
+  font-size: 16px;
+  margin: auto;
+  padding: 0;
+  text-align: center;
+
+  text-decoration: underline;
+}
