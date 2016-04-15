@@ -1,4 +1,7 @@
-var gun=null;
+var gun = null;
+var offline = false;
+var offlineMode = false;
+
 
 // cosmetics
 function makeStampsPretty() {
@@ -27,14 +30,14 @@ function initLogin() {
   $('#loginform').on('submit', function(event) {
     event.preventDefault();
     var isUser = false;
-    var user = gun.get('people').get(CryptoJS.SHA256($("#emailinput").val()).toString(CryptoJS.enc.Base64));
+    var user = gun.get('people').get("person/"+CryptoJS.SHA256($("#emailinput").val()).toString(CryptoJS.enc.Base64));
     user.not(function(usr){
       alert("Email ne ustreza nobenemu uporabniku")
     });
     user.val(function(usr) {
       isUser = true;
       if (usr.password == CryptoJS.SHA256($('#passwordinput').val()).toString(CryptoJS.enc.Base64)) {
-        localStorage.setItem('user', CryptoJS.SHA256($('#emailinput').val()).toString(CryptoJS.enc.Base64))
+        localStorage.setItem('user', "person/"+CryptoJS.SHA256($('#emailinput').val()).toString(CryptoJS.enc.Base64))
 
         $('#login').addClass('hidden');
         $('#register').addClass('hidden');
@@ -61,42 +64,37 @@ function createUser() {
       localStorage.setItem('mail', $('#registeremailinput').val())
     }
   });*/
-  /*var peaks = gun.get("peaks").put({
-    triglav: false,
-    smarna: false,
-    neki: false,
-    morje: false,
-    krma: false,
-    kum: false,
-    mangart: false,
-    spik: false,
-    roznik: false,
-    stol: false,
-  });*/
+  
+  if (offlineMode===true)
+  {
+    offline = true;
+    localStorage.setItem('update', "person/"+CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64));
+    localStorage.setItem('lpeaks', JSON.stringify({}));
+    localStorage.setItem('lperson', JSON.stringify({
+      name: $('#registernameinput').val(),
+      email: CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64),
+      password: CryptoJS.SHA256($('#registerpasswordinput').val()).toString(CryptoJS.enc.Base64),
+    }));
 
-  var user = gun.get(CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64)).put({
-    name: $('#registernameinput').val(),
-    email: CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64),
-    password: CryptoJS.SHA256($('#registerpasswordinput').val()).toString(CryptoJS.enc.Base64),
-    peaks: {
-      triglav: false,
-      smarna: false,
-      neki: false,
-      morje: false,
-      krma: false,
-      kum: false,
-      mangart: false,
-      spik: false,
-      roznik: false,
-      stol: false,
-    },
-  });
-  //user.set(peaks);
+  }
+  else{
 
-  var people = gun.get('people');
-  people.set(user)
+    var peaks = gun.get("peaks").put({
 
-  localStorage.setItem('user', CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64))
+    });
+
+    var user = gun.get("person/"+CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64)).put({
+      name: $('#registernameinput').val(),
+      email: CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64),
+      password: CryptoJS.SHA256($('#registerpasswordinput').val()).toString(CryptoJS.enc.Base64),
+    });
+    user.set(peaks);
+
+    var people = gun.get('people');
+    people.set(user)
+  }
+
+  localStorage.setItem('user', "person/"+CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64))
 
   $('#login').addClass('hidden');
   $('#register').addClass('hidden');
@@ -112,7 +110,7 @@ function initReg() {
     event.preventDefault();
 
     var isUser = false;
-    var user = gun.get('people').get(CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64));
+    var user = gun.get('people').get("person/"+CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64));
     user.val(function(usr) {
       if (usr.name !== "undefined" && !isUser) {
         isUser = true;
@@ -129,38 +127,48 @@ function initReg() {
 
 function addPeak(userObj, nameOfPeak) {
   var myPeaks = null;
-  console.log(nameOfPeak);
-  userObj.val(function(user){
-    myPeaks=user.peaks;
-    
-    myPeaks[nameOfPeak] = true;
-    console.log(myPeaks);
-    userObj.put({
-      peaks: myPeaks
-    });
+
+  if(userObj!==false){
+    userObj.path("peaks").path(nameOfPeak).put(true)
+  }
+  else{
+    //offline mode
+    var peaks = JSON.parse(localStorage.getItem("lpeaks"))
+    peaks[nameOfPeak]=true
+    localStorage.setItem("lpeaks", JSON.stringify(peaks))
+  }
 
   console.log('Dodal ' + nameOfPeak + '!');
   $('#addstamp').addClass('hidden');
   $('#stamps').removeClass('hidden');
   initStampScreen();
-  });
 }
 
 
 function initStampScreen() {
   var user = localStorage.getItem('user');
-  var userObj = gun.get("people").get(user);
+  if(offline===false){
+    var userObj = gun.get("people").get(user);
   
-  userObj.path("name").val(function(name){
-    $("#my_name").text(name)
-  });
-  userObj.path("peaks").val(function(peaks){
-    console.log(peaks);
-    //var peakz = JSON.parse(peaks);
-    //for (var i=0; i<peakz.length; i++)
-    //{
-    //  $("#"+peakz[i]).addClass("stamped");
-    //}
+    userObj.path("name").val(function(name){
+      $("#my_name").text(name)
+    });
+    userObj.path("peaks").val(function(peaks){
+      console.log(peaks);
+      for (var key in peaks){
+        console.log("kluc:"+key)
+        if (peaks[key]===true)
+        {
+          $("#"+key).addClass("stamped");
+        }
+      }
+
+    
+    });
+    return userObj;
+  }
+  else{
+    var peaks = JSON.parse(localStorage.getItem("lpeaks"))
     for (var key in peaks){
       console.log("kluc:"+key)
       if (peaks[key]===true)
@@ -168,26 +176,52 @@ function initStampScreen() {
         $("#"+key).addClass("stamped");
       }
     }
-
+    return false
+  }
   
-  });
-  return userObj;
 }
 
 $(document).ready(function() {
   ping("http://pelji.se:81",
     function(){
-      gun = Gun(["http://pelji.se:81/"]);
+      console.log("online");
+      //gun = Gun(["http://pelji.se:81/"]);
+      gun = Gun("http://10.103.6.48:8080/");
+
+      var local = localStorage.getItem("update");
+      if (local!==null)
+      {
+        var lpeaks = JSON.parse(localStorage.getItem("lpeaks"));
+        var luser = JSON.parse(localStorage.getItem("lperson"));
+        if (local.localeCompare("person/"+luser.email)===0){
+          console.log("Update user is in progres");
+          gun.get("people").get("person/"+luser.email).put(luser)
+          gun.get("people").get("person/"+luser.email).path("peaks").put(lpeaks)
+          localStorage.removeItem("lpeaks");
+          localStorage.removeItem("lperson");
+          localStorage.removeItem("update");
+        }
+      }
+
+      //gun = Gun();
       init();
     },
     function(){
+      console.log("offline")
+      //offline mode
+      var local = localStorage.getItem("update");
+      if (local!==null){
+        offline=true;
+      }
       gun = Gun();
+      offlineMode=true;
       init();
     });
   function init(){
     initLogin();
     initReg();
     var userObj = initStampScreen();
+
     $(".stampme").lunastamps.init(function(peakname) {
       addPeak(userObj, peakname);
     });
@@ -199,5 +233,6 @@ $(document).ready(function() {
       $('#stamps').removeClass('hidden');
       makeStampsPretty();
     }
+    initStampScreen();
   }
 });
