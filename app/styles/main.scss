@@ -194,3 +194,50 @@ a h2 {
 
   text-decoration: underline;
 }
+
+.buttonscontainer {
+  position: relative;
+  margin-top: 100%;
+}
+.buttonscontainer > div {
+  float: left;
+  width: 40%;
+}
+.buttonscontainer > div:first-child {
+  margin-right: 10%;
+}
+
+.btn-nazaj {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+.btn-vpisi {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+.vpisikodo {
+  text-align: right;
+}
+.vpisikodo-input {
+  background: #f0f0f0;
+  border-width: 0;
+  width: 70px;
+  height: 42px;
+  border-bottom: 8px solid #f0f0f0;
+  color: #000000;
+
+  text-align: center;
+}
+.btn-oddaj-kodo {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 16px;
+  width: 30px;
+  padding-left: 0;
+  padding-right: 0;
+  display: inline-block;
+}

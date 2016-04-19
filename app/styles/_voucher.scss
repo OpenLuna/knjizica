@@ -59,6 +59,9 @@ a.laskobtn:hover {
   text-align: center;
   margin-bottom: 10px;
   padding: 20px;
+  // padding-top: 16px;
+  //
+  // border-top: 4px solid #1c8553;
 
   border-bottom: 4px solid #0c4623;
 
@@ -66,9 +69,8 @@ a.laskobtn:hover {
 }
 .laskobtn:hover, .lastkobtn:active {
   border-bottom-color: #1c8553;
-  padding-bottom: 16px;
-  top: 4px;
-  margin-bottom: 14px;
+  border-bottom-width: 0;
+  border-top: 4px solid #ffffff;
 }
 .laskobtn:hover:last-of-type, .lastkobtn:active:last-of-type {
   border-bottom-color: #1c8553;
