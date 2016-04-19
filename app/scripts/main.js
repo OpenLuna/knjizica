@@ -16,7 +16,7 @@ function makeStampsPretty() {
 function ping(url, sCallback, eCallback){
    $.ajax({
       url: url,
-      cache:false,
+      //cache:false,
       success: function(result){
         sCallback();
       },
@@ -52,18 +52,22 @@ function initLogin() {
   });
 }
 
-function createUser() {
-  //TODO:send email to server
-  /*$.ajax({
-    url: "http://",
+function saveEmail(email){
+  $.ajax({
+    url: "http://luna.webfactional.com/api/save_email/"+$('#registeremailinput').val(),
     cache:false,
     success: function(result){
-      //Do nothing
+      return result.saved
     },
     error: function(result){
       localStorage.setItem('mail', $('#registeremailinput').val())
     }
-  });*/
+  });
+}
+
+function createUser() {
+  //TODO:send email to server
+  saveEmail($('#registeremailinput').val());
   
   if (offlineMode===true)
   {
@@ -182,15 +186,23 @@ function initStampScreen() {
 }
 
 $(document).ready(function() {
-  ping("http://pelji.se:81",
+  ping("http://luna.webfactional.com/api/ping/",
     function(){
       console.log("online");
-      //gun = Gun(["http://pelji.se:81/"]);
-      gun = Gun("http://10.103.6.48:8080/");
+      gun = Gun(["http://luna.webfactional.com/gun/"]);
+      //gun = Gun("http://10.103.6.48:8080/");
 
       var local = localStorage.getItem("update");
-      if (local!==null)
-      {
+      var mail = localStorage.getItem('mail');
+
+      if (mail!==null){
+        var resp = saveEmail(mail)
+        if (resp===true){
+          localStorage.removeItem("mail");
+        }
+      }
+
+      if (local!==null){
         var lpeaks = JSON.parse(localStorage.getItem("lpeaks"));
         var luser = JSON.parse(localStorage.getItem("lperson"));
         if (local.localeCompare("person/"+luser.email)===0){
