@@ -2,7 +2,6 @@ var gun = null;
 var offline = false;
 var offlineMode = false;
 
-
 // cosmetics
 function makeStampsPretty() {
   $('.stamp').height($('.stamp').width());
@@ -169,6 +168,7 @@ function initStampScreen() {
 
     
     });
+    makeStampsPretty();
     return userObj;
   }
   else{
@@ -180,6 +180,7 @@ function initStampScreen() {
         $("#"+key).addClass("stamped");
       }
     }
+    makeStampsPretty();
     return false
   }
   
@@ -189,7 +190,7 @@ $(document).ready(function() {
   ping("http://luna.webfactional.com/api/ping/",
     function(){
       console.log("online");
-      gun = Gun(["http://luna.webfactional.com/gun/"]);
+      gun = Gun(["http://pelji.se/ponosen/"]);
       //gun = Gun("http://10.103.6.48:8080/");
 
       var local = localStorage.getItem("update");
@@ -247,4 +248,8 @@ $(document).ready(function() {
     }
     initStampScreen();
   }
+  $(".btn-nazaj").on("click", function(){
+    $('#addstamp').addClass('hidden');
+    $('#stamps').removeClass('hidden');
+  })
 });

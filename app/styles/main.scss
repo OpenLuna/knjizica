@@ -11,9 +11,21 @@ $icon-font-path: '../fonts/';
   padding: 0.2em 0;
 }
 
+html {
+  min-height: 100%;
+}
+
 body {
-  background-image: url('../images/bck.jpg');
-  background-size: cover;
+  background-color: #ffffff;
+  font-family: 'NeutraMedium', sans-serif;
+  color: #ffffff;
+  font-size: 22px;
+  background-image: url('../images/gore.png');
+  background-position: center bottom;
+  background-size: 100%;
+  background-repeat: no-repeat;
+
+  padding-bottom: 110px;
 }
 
 .stamps {
@@ -29,8 +41,8 @@ body {
 .stamp {
   width: 30%;
 
-  background-image: url('../images/st.png');
-  background-size: cover;
+  background-image: url('../images/dodaj_mangart.png');
+  background-size: contain;
   background-repeat: no-repeat;
 
   position: relative;
@@ -40,13 +52,13 @@ body {
 
 }
 .stamp:nth-child(3n-2) {
-  margin-right: 2%;
+  margin-right: 5%;
 }
 .stamp:nth-child(3n) {
-  margin-left : 2%;
+  margin-left : 5%;
 }
 .stamp:nth-child(10) {
-  margin-left: 32%;
+  margin-left: 35%;
 }
 .stamp.stamped {
     background-image: url('../images/stampiljka.png');
@@ -59,8 +71,173 @@ body {
     bottom: 0;
     left: 0;
 
-    background-image: url('../images/st.png');
-    background-size: auto;
+    background-image: url('../images/stempeljsem_mangart.png');
+    background-size: 75%;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+// VOUCHER AND BEYOND
+@import 'voucher';
+@import 'input';
+
+#header {
+  background-color: rgba(16, 96, 58, 0.5);
+  height: 60px;
+
+  text-transform: uppercase;
+  text-align: center;
+
+  position: relative;
+}
+#headertext {
+  line-height: 60px;
+  font-weight: 200;
+  font-size: 16px;
+}
+#footerbottom {
+  width: 100%;
+  height: 20px;
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+  background-image: url('../images/triglav.png');
+  background-position: center;
+  background-size: cover;
+}
+
+h1 {
+  color: #000000;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 20px;
+}
+
+#login h1 {
+  margin-top: 25%;
+}
+
+#loginform {
+  max-width: 290px;
+  margin: auto;
+  margin-top: 10%;
+}
+
+button {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+
+  text-transform: uppercase;
+
+  font-family: 'NeutraBold';
+  min-width: 100%;
+
+}
+
+@import 'stamps';
+
+.vrhinfo {
+  position: relative;
+  margin: auto;
+  color: #000000;
+  margin-top: 25%;
+  text-align: center;
+}
+.vrhinfo:before {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 50px;
+  background-image: url('../images/carret_left.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+
+  top: 5px;
+
+  margin-left: -70px;
+  left: 50%;
+}
+.vrhinfo:after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 50px;
+  background-image: url('../images/carret_right.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+
+  top: 5px;
+
+  margin-right: -68px;
+  right: 50%;
+}
+.vrhinfo .vrhname {
+  padding-top: 5px;
+}
+.vrhinfo .vrhheight {
+  padding-top: 0;
+  margin-top: -8px;
+}
+
+a h2 {
+  color: #000000;
+  font-size: 16px;
+  margin: auto;
+  padding: 0;
+  text-align: center;
+
+  text-decoration: underline;
+}
+
+.buttonscontainer {
+  position: relative;
+  margin-top: 100%;
+}
+.buttonscontainer > div {
+  float: left;
+  width: 40%;
+}
+.buttonscontainer > div:first-child {
+  margin-right: 10%;
+}
+
+.btn-nazaj {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+.btn-vpisi {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+.vpisikodo {
+  text-align: right;
+}
+.vpisikodo-input {
+  background: #f0f0f0;
+  border-width: 0;
+  width: 70px;
+  height: 42px;
+  border-bottom: 8px solid #f0f0f0;
+  color: #000000;
+
+  text-align: center;
+}
+.btn-oddaj-kodo {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 16px;
+  width: 30px;
+  padding-left: 0;
+  padding-right: 0;
+  display: inline-block;
 }

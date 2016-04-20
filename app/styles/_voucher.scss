@@ -1,0 +1,175 @@
+/* Space out content a bit */
+@font-face {
+  font-family: 'NeutraMedium';
+  src: url('http://luna.webfactional.com/static/ponosen/fonts/NeutraDisp-Medium.ttf');
+}
+@font-face {
+  font-family: 'NeutraBold';
+  src: url('http://luna.webfactional.com/static/ponosen/fonts/NeutraDisp-Bold.ttf');
+}
+
+.pattern {
+  background-image: url('http://luna.webfactional.com/static/ponosen/images/pattern.png');
+}
+.green {
+  background-color: #10603a;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.logo {
+  height: 130px;
+  width: 100%;
+  background-image: url('http://luna.webfactional.com/static/ponosen/images/logo.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+p {
+  text-align: center;
+}
+p.smalltext {
+  font-size: 18px;
+}
+
+p.padme {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+p.smalltext.padme {
+  padding-top: 30px;
+  padding-bottom: 0;
+}
+
+a.laskobtn {
+  text-decoration: none;
+  color: #ffffff;
+}
+a.laskobtn:hover {
+  text-decoration: none;
+  color: #ffffff;
+}
+.laskobtn {
+  position: relative;
+  display: block;
+  margin: auto;
+  background-color: #1c8553;
+  max-width: 250px;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 20px;
+  // padding-top: 16px;
+  //
+  // border-top: 4px solid #1c8553;
+
+  border-bottom: 4px solid #0c4623;
+
+  cursor: pointer;
+}
+.laskobtn:hover, .lastkobtn:active {
+  border-bottom-color: #1c8553;
+  border-bottom-width: 0;
+  border-top: 4px solid #ffffff;
+}
+.laskobtn:hover:last-of-type, .lastkobtn:active:last-of-type {
+  border-bottom-color: #1c8553;
+  padding-bottom: 20px;
+  top: 4px;
+  margin-bottom: 14px;
+}
+.lunalogo {
+  display: block;
+  position: relative;
+  background-image: url('http://luna.webfactional.com/static/ponosen/images/lunalogo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  max-width: 150px;
+  height: 50px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.myform {
+  position: relative;
+  display: block;
+  width: 260px;
+  height: 30px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+}
+.inputlabel {
+  width: 50px;
+  height: 30px;
+  font-size: 22px;
+  background-color: #1c8553;
+  text-align: center;
+  line-height: 30px;
+  border-bottom: 2px solid #0c4623;
+
+  display: block;
+  position: relative;
+  float: left;
+
+  padding-left: 5px;
+  padding-right: 5px;
+}
+// input {
+//   display: block;
+//   position: relative;
+//   float: left;
+//
+//   width: 200px;
+//   height: 30px;
+//   font-size: 22px;
+//   color: #000000;
+//   line-height: 30px;
+//   padding: 0 5px 0 5px;
+//   border-width: 0;
+// }
+
+.stempelj {
+  width: 200px;
+  height: 200px;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  display: block;
+  position: relative;
+  margin: auto;
+}
+.stempelj.stempeljsem {
+  background-image: url('http://luna.webfactional.com/static/ponosen/images/stempeljsem.png');
+}
+.stempelj.stempeljdone {
+  background-image: url('http://luna.webfactional.com/static/ponosen/images/stempelj.png');
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: #10603a;
+
+    text-align: center;
+}
+.popup h1, .popup h2 {
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+.popup h1 {
+    margin-top: 130px;
+}
