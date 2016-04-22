@@ -5,7 +5,8 @@
     "bootstrap-sass": "~3.3.5",
     "modernizr": "~2.8.1",
     "gun": "~0.3.4",
-    "crypto-js": "~3.1.6"
+    "crypto-js": "~3.1.6",
+    "jquery.event.swipe": "^0.5.4"
   },
   "overrides": {
     "bootstrap-sass": {

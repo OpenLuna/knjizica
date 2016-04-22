@@ -5,7 +5,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>knjizica</title>
-
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
 
@@ -23,11 +23,12 @@
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <!-- endbuild -->
   </head>
-  <body>
+  <body onload="onLoad()">
     <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
+    <section id="splash">
+    </section>
     <section id="header">
       <div class="container-fluid">
         <div class="row">
@@ -86,7 +87,7 @@
       </div>
     </section>
 
-    <section id="login" class="">
+    <section id="login" class="hidden">
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
@@ -122,15 +123,15 @@
           <div class="col-xs-12">
             <h1>Osvojeni vrhovi</h1>
             <div class="stamps">
-              <div id="triglav" class="stamp stamped"></div>
-              <div id="morje" class="stamp"></div>
-              <div id="smarna" class="stamp"></div>
-              <div id="kum" class="stamp"></div>
-              <div id="neki" class="stamp"></div>
-              <div id="krma" class="stamp"></div>
-              <div id="mangart" class="stamp"></div>
-              <div id="stol" class="stamp"></div>
-              <div id="spik" class="stamp"></div>
+              <div id="kopitnik" data-peak="Kopitnik" data-height="910 m" class="stamp"></div>
+              <div id="loka" data-peak="Loka" data-height="1500 m" class="stamp"></div>
+              <div id="mrzlica" data-peak="Mrzlica" data-height="1122 m" class="stamp"></div>
+              <div id="nanos" data-peak="Nanos" data-height="1313 m" class="stamp"></div>
+              <div id="peca" data-peak="Peca" data-height="2125 m" class="stamp"></div>
+              <div id="razor" data-peak="Razor" data-height="2650 m" class="stamp"></div>
+              <div id="smohor" data-peak="Šmohor" data-height="1944 m" class="stamp"></div>
+              <div id="studenec" data-peak="Studenec" data-height="1280 m" class="stamp"></div>
+              <div id="zelenica" data-peak="Zelenica" data-height="2114 m" class="stamp"></div>
             </div>
           </div>
         </div>
@@ -138,10 +139,11 @@
     </section>
 
     <section id="addstamp" class="hidden">
-        <div class="stampme">
+        <div id="stampme" class="stampme">
           <div class="container">
             <div class="row">
               <div class="col-xs-12">
+                
                 <div class="vrhinfo">
                   <div class="vrhname">
                     Mangart
@@ -150,6 +152,8 @@
                     2679 m
                   </div>
                 </div>
+                <div class="prev-peak"></div>
+                <div class="next-peak"></div>
                 <div class="buttonscontainer">
                   <div class="laskobtn btn-nazaj">Nazaj</div>
                   <div class="vpisikodo">
@@ -182,6 +186,8 @@
     <script src="/bower_components/crypto-js/index.js"></script>
     <script src="/bower_components/crypto-js/core.js"></script>
     <script src="/bower_components/crypto-js/sha256.js"></script>
+    <script src="/bower_components/jquery.event.move/js/jquery.event.move.js"></script>
+    <script src="/bower_components/jquery.event.swipe/js/jquery.event.swipe.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

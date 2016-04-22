@@ -64,7 +64,7 @@ body {
     background-image: url('../images/stampiljka.png');
 }
 
-.stampme {
+#stampme {
     position: absolute;
     top: 0;
     right: 0;
@@ -145,7 +145,8 @@ button {
   margin-top: 25%;
   text-align: center;
 }
-.vrhinfo:before {
+.prev-peak {
+  margin-top: 25%;
   content: '';
   position: absolute;
   width: 30px;
@@ -161,7 +162,8 @@ button {
   margin-left: -70px;
   left: 50%;
 }
-.vrhinfo:after {
+.next-peak {
+  margin-top: 25%;
   content: '';
   position: absolute;
   width: 30px;

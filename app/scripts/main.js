@@ -1,13 +1,46 @@
 var gun = null;
 var offline = false;
 var offlineMode = false;
+var thisPeak = null;
 
 // cosmetics
 function makeStampsPretty() {
   $('.stamp').height($('.stamp').width());
   $('.stamp').on('click', function() {
-    $('#stamps').addClass('hidden');
-    $('#addstamp').removeClass('hidden');
+    showPeak(this);
+    //history.pushState({"stamp":"stamp"}, "stamp", "index.html");
+  });
+}
+
+function showPeak(peak){
+  thisPeak = peak;
+  $('#stamps').addClass('hidden');
+  $('#addstamp').removeClass('hidden');
+  $('#stampme').removeClass();
+  $('#stampme').addClass(peak.id);
+  if ($(peak).hasClass("stamped")){
+    $('#stampme').addClass("stamped");
+  }
+  $(".vrhname").text($(peak).data().peak);
+  $(".vrhheight").text($(peak).data().height);
+
+  $(".prev-peak").off().on("click", function(e){
+    console.log("nazaj");
+    try{
+      showPeak($(peak).prev()[0]);
+    }
+    catch(exception){
+      showPeak($(".stamp").slice(-1)[0]);
+    }
+  });
+  $(".next-peak").off().on("click", function(e){
+    console.log("naprej");
+    try{
+      showPeak($(peak).next()[0]);
+    }
+    catch(exception){
+      showPeak($(".stamp")[0]);
+    }
   });
 }
 
@@ -31,7 +64,7 @@ function initLogin() {
     var isUser = false;
     var user = gun.get('people').get("person/"+CryptoJS.SHA256($("#emailinput").val()).toString(CryptoJS.enc.Base64));
     user.not(function(usr){
-      alert("Email ne ustreza nobenemu uporabniku")
+      createUser();
     });
     user.val(function(usr) {
       isUser = true;
@@ -53,30 +86,29 @@ function initLogin() {
 
 function saveEmail(email){
   $.ajax({
-    url: "http://luna.webfactional.com/api/save_email/"+$('#registeremailinput').val(),
+    url: "http://luna.webfactional.com/api/save_email/"+$('#emailinput').val(),
     cache:false,
     success: function(result){
       return result.saved
     },
     error: function(result){
-      localStorage.setItem('mail', $('#registeremailinput').val())
+      localStorage.setItem('mail', $('#emailinput').val())
     }
   });
 }
 
 function createUser() {
   //TODO:send email to server
-  saveEmail($('#registeremailinput').val());
+  saveEmail($('#emailinput').val());
   
   if (offlineMode===true)
   {
     offline = true;
-    localStorage.setItem('update', "person/"+CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64));
+    localStorage.setItem('update', "person/"+CryptoJS.SHA256($('#emailinput').val()).toString(CryptoJS.enc.Base64));
     localStorage.setItem('lpeaks', JSON.stringify({}));
     localStorage.setItem('lperson', JSON.stringify({
-      name: $('#registernameinput').val(),
-      email: CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64),
-      password: CryptoJS.SHA256($('#registerpasswordinput').val()).toString(CryptoJS.enc.Base64),
+      email: CryptoJS.SHA256($('#emailinput').val()).toString(CryptoJS.enc.Base64),
+      password: CryptoJS.SHA256($('#passwordinput').val()).toString(CryptoJS.enc.Base64),
     }));
 
   }
@@ -86,10 +118,9 @@ function createUser() {
 
     });
 
-    var user = gun.get("person/"+CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64)).put({
-      name: $('#registernameinput').val(),
-      email: CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64),
-      password: CryptoJS.SHA256($('#registerpasswordinput').val()).toString(CryptoJS.enc.Base64),
+    var user = gun.get("person/"+CryptoJS.SHA256($('#emailinput').val()).toString(CryptoJS.enc.Base64)).put({
+      email: CryptoJS.SHA256($('#emailinput').val()).toString(CryptoJS.enc.Base64),
+      password: CryptoJS.SHA256($('#passwordinput').val()).toString(CryptoJS.enc.Base64),
     });
     user.set(peaks);
 
@@ -97,7 +128,7 @@ function createUser() {
     people.set(user)
   }
 
-  localStorage.setItem('user', "person/"+CryptoJS.SHA256($('#registeremailinput').val()).toString(CryptoJS.enc.Base64))
+  localStorage.setItem('user', "person/"+CryptoJS.SHA256($('#emailinput').val()).toString(CryptoJS.enc.Base64))
 
   $('#login').addClass('hidden');
   $('#register').addClass('hidden');
@@ -142,9 +173,16 @@ function addPeak(userObj, nameOfPeak) {
   }
 
   console.log('Dodal ' + nameOfPeak + '!');
-  $('#addstamp').addClass('hidden');
-  $('#stamps').removeClass('hidden');
-  initStampScreen();
+  $("#"+nameOfPeak).addClass("stamped");
+
+  showPeak($("#"+nameOfPeak)[0]);
+  setTimeout(function(){
+    
+    $('#addstamp').addClass('hidden');
+    $('#stamps').removeClass('hidden');
+    makeStampsPretty();
+  }, 3000);
+
 }
 
 
@@ -235,21 +273,74 @@ $(document).ready(function() {
     initReg();
     var userObj = initStampScreen();
 
-    $(".stampme").lunastamps.init(function(peakname) {
+    $("#stampme").lunastamps.init(function(peakname) {
       addPeak(userObj, peakname);
     });
     var user = localStorage.getItem('user');
     console.log(user)
     if (user !== null){
+      $('#splash').addClass('hidden');
       $('#login').addClass('hidden');
       $('#register').addClass('hidden');
       $('#stamps').removeClass('hidden');
       makeStampsPretty();
     }
+    else{
+      $('#splash').addClass('hidden');
+      $('#login').removeClass('hidden');
+    }
     initStampScreen();
   }
   $(".btn-nazaj").on("click", function(){
-    $('#addstamp').addClass('hidden');
-    $('#stamps').removeClass('hidden');
+    onBackKeyDown();
+  });
+
+  $('.stampme').on('swiperight', function(e) {
+    console.log("right");
+    try{
+      showPeak($(thisPeak).prev()[0]);
+    }
+    catch(exception){
+      showPeak($(".stamp").slice(-1)[0]);
+    }
+  }).on('swipeleft', function(e) {
+    console.log("left");
+    try{
+      showPeak($(thisPeak).next()[0]);
+    }
+    catch(exception){
+      showPeak($(".stamp")[0]);
+    }
   })
 });
+
+function onBackKeyDown() {
+  console.log("BACK");
+  if(!$('#addstamp').hasClass('hidden'))
+  {
+    console.log("fkorze");
+    $('#stampme').removeClass();
+    $('#addstamp').addClass('hidden');
+    $('#stamps').removeClass('hidden');
+  }
+}
+function back(e){
+  if(!$('#addstamp').hasClass('hidden')){
+    e.preventDefault();
+    onBackKeyDown();
+  }
+  else{
+    console.log("Doma si dj zapri");
+    navigator.app.exitApp();
+  }
+  console.log("back btn event");
+  
+}
+function onDeviceReady() {
+  console.log("device ready");
+  document.addEventListener("backbutton", back, false);
+}
+function onLoad() {
+    console.log("onLoad");
+    document.addEventListener("deviceready", onDeviceReady, false);
+}
