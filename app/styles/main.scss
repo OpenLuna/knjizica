@@ -39,7 +39,7 @@ body {
   overflow: hidden;
 }
 .stamp {
-  width: 30%;
+  width: 47%;
 
   background-image: url('../images/dodaj_mangart.png');
   background-size: contain;
@@ -48,17 +48,17 @@ body {
   position: relative;
   float: left;
 
-  margin-bottom: 2%;
+  margin-bottom: 6%;
 
 }
-.stamp:nth-child(3n-2) {
-  margin-right: 5%;
+.stamp:nth-child(2n-1) {
+  margin-right: 3%;
 }
-.stamp:nth-child(3n) {
-  margin-left : 5%;
+.stamp:nth-child(2n) {
+  margin-left : 3%;
 }
-.stamp:nth-child(10) {
-  margin-left: 35%;
+.stamp:nth-child(9) {
+  margin-left: 25%;
 }
 .stamp.stamped {
     background-image: url('../images/stampiljka.png');
@@ -242,4 +242,8 @@ a h2 {
   padding-left: 0;
   padding-right: 0;
   display: inline-block;
+}
+.full-img {
+  width:100%;
+  height:100%;
 }

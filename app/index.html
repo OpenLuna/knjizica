@@ -11,12 +11,15 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    
+
 
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
@@ -28,6 +31,7 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <section id="splash">
+      <!--<img class="full-img" src="../images/prelaunch.png">-->
     </section>
     <section id="header">
       <div class="container-fluid">
@@ -158,7 +162,7 @@
                   <div class="laskobtn btn-nazaj">Nazaj</div>
                   <div class="vpisikodo">
                     <div class="laskobtn btn-vpisi hidden">Vpiši kodo</div>
-                    <input type="number" class="vpisikodo-input"><div class="laskobtn btn-oddaj-kodo">X</div>
+                    <input type="number" class="vpisikodo-input"><div id="dodaj" class="laskobtn btn-oddaj-kodo">&#10004;</div>
                   </div>
                 </div>
               </div>
@@ -188,6 +192,8 @@
     <script src="/bower_components/crypto-js/sha256.js"></script>
     <script src="/bower_components/jquery.event.move/js/jquery.event.move.js"></script>
     <script src="/bower_components/jquery.event.swipe/js/jquery.event.swipe.js"></script>
+    <script src="bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
+    
     <!-- endbower -->
     <!-- endbuild -->
 

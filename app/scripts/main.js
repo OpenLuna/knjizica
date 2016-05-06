@@ -2,7 +2,7 @@ var gun = null;
 var offline = false;
 var offlineMode = false;
 var thisPeak = null;
-
+var userObj = null;
 // cosmetics
 function makeStampsPretty() {
   $('.stamp').height($('.stamp').width());
@@ -78,7 +78,7 @@ function initLogin() {
         location.reload();
 
       } else {
-        alert("Geslo ne ustreza uporabniku")
+        swal("Geslo ne ustreza uporabniku")
       }
     });
   });
@@ -86,9 +86,9 @@ function initLogin() {
 
 function saveEmail(email){
   $.ajax({
-    url: "http://luna.webfactional.com/api/save_email/"+$('#emailinput').val(),
-    cache:false,
+    url: "https://knedl.si/api/save_email/"+email,
     success: function(result){
+      localStorage.removeItem("mail");
       return result.saved
     },
     error: function(result){
@@ -148,7 +148,7 @@ function initReg() {
     user.val(function(usr) {
       if (usr.name !== "undefined" && !isUser) {
         isUser = true;
-        alert("Uporabnik s tem emailom že obstaja");
+        swal("Uporabnik s tem emailom že obstaja");
       }
     });
     user.not(function(usr){
@@ -225,20 +225,16 @@ function initStampScreen() {
 }
 
 $(document).ready(function() {
-  ping("http://luna.webfactional.com/api/ping/",
+  ping("https://knedl.si/api/ping/",
     function(){
       console.log("online");
-      gun = Gun(["http://pelji.se/ponosen/"]);
-      //gun = Gun("http://10.103.6.48:8080/");
+      gun = Gun(["https://knedl.si/gun/gun"]);
 
       var local = localStorage.getItem("update");
       var mail = localStorage.getItem('mail');
 
       if (mail!==null){
         var resp = saveEmail(mail)
-        if (resp===true){
-          localStorage.removeItem("mail");
-        }
       }
 
       if (local!==null){
@@ -271,24 +267,14 @@ $(document).ready(function() {
   function init(){
     initLogin();
     initReg();
-    var userObj = initStampScreen();
+    userObj = initStampScreen();
 
     $("#stampme").lunastamps.init(function(peakname) {
       addPeak(userObj, peakname);
     });
     var user = localStorage.getItem('user');
     console.log(user)
-    if (user !== null){
-      $('#splash').addClass('hidden');
-      $('#login').addClass('hidden');
-      $('#register').addClass('hidden');
-      $('#stamps').removeClass('hidden');
-      makeStampsPretty();
-    }
-    else{
-      $('#splash').addClass('hidden');
-      $('#login').removeClass('hidden');
-    }
+    //splash();
     initStampScreen();
   }
   $(".btn-nazaj").on("click", function(){
@@ -312,6 +298,26 @@ $(document).ready(function() {
       showPeak($(".stamp")[0]);
     }
   })
+  /*$("#dodaj").on("click", function(){
+    var koda = $(".vpisikodo-input").val();
+    var peak = $("#stampme")[0].classList;
+    if(peak.length>1)
+    {
+      swal("Štempl za "+names[peak[0]]+" že imaš.")
+    }
+    else
+    {
+      if (stampsIDs[peak[0]] === parseInt(koda))
+      {
+        addPeak(userObj, peak[0])
+      }
+      else
+      {
+        swal("To ni koda za "+names[peak[0]]+".")
+      }
+    }
+    $(".vpisikodo-input").val("");
+  });*/
 });
 
 function onBackKeyDown() {
@@ -339,8 +345,25 @@ function back(e){
 function onDeviceReady() {
   console.log("device ready");
   document.addEventListener("backbutton", back, false);
+  splash();
+  
 }
 function onLoad() {
     console.log("onLoad");
     document.addEventListener("deviceready", onDeviceReady, false);
+
+}
+function splash(){
+  var user = localStorage.getItem('user');
+  if (user !== null){
+    $('#splash').addClass('hidden');
+    $('#login').addClass('hidden');
+    $('#register').addClass('hidden');
+    $('#stamps').removeClass('hidden');
+    makeStampsPretty();
+  }
+  else{
+    $('#splash').addClass('hidden');
+    $('#login').removeClass('hidden');
+  }
 }
